@@ -6,14 +6,14 @@ export const writePolygon = (ctx: CanvasRenderingContext2D,polygon: Polygon,from
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   for (let i = 0; i < polygon.points.length; i++) {
     const i2 = (i + 1) % polygon.points.length;
-    writePointText(ctx,polygon.points[i].x,polygon.points[i].y,`o\np${i}\n:(${fromPolygon.points[i].x},${fromPolygon.points[i].y})`,baseColor);
+    writePointText(ctx,polygon.points[i].x,polygon.points[i].y,`o p${i}`,baseColor);
     writeLine(ctx,polygon.points[i],polygon.points[i2],baseColor);
   }
   for (let i = 0;i < polygon.hole.length; i++) {
     const color = colors[i];
     const holePoly = polygon.hole[i];
     for (let j = 0; j < holePoly.points.length; j++) {
-      const holeStr = `i${i}\np${j}:(${fromPolygon.hole[i].points[j].x},${fromPolygon.hole[i].points[j].y})`;
+      const holeStr = `i${i} p${j}`;
       const j2 = (j + 1) % holePoly.points.length;
       writePointText(ctx,holePoly.points[j].x,holePoly.points[j].y,holeStr,color);
       writeLine(ctx,holePoly.points[j],holePoly.points[j2],color);
