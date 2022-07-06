@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {writePoint, writePolygon} from './canvasRenderer';
+import { writePolygon } from './canvasRenderer';
 import {Button, TextareaAutosize} from '@mui/material';
 import {normalizePolygon, Polygon} from './Polygon';
 
@@ -47,18 +46,12 @@ function App() {
     if (!canvas) return;
     const ctx = (canvas as HTMLCanvasElement).getContext("2d");
     setCanvasCtx(ctx);
-    const converted = normalizePolygon(polygon!,800,800);
-    setPolygon(converted!);
     if (!ctx) return;
     // yが上になるように
     ctx.font = "20px serif";
     ctx.save();
   },[])
 
-  useEffect(() => {
-    if (!canvasCtx) return;
-    console.log(polygon);
-  },[canvasCtx]);
 
   const handleValueChange = (ev: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = ev.target.value as string;
@@ -78,7 +71,7 @@ function App() {
     <div className="App">
       <div className="Left-Element">
         <p>
-          Input Field
+          {statusMessage}
         </p>
         <TextareaAutosize
           maxRows="1000"
