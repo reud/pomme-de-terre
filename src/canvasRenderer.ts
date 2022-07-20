@@ -1,19 +1,27 @@
 import {Polygon, Vector2} from './Polygon';
+import {RendererOptions} from './Options';
 
 const baseColor = 'black';
 const colors = ['red','purple','lime','yellow', 'aqua','orange']
-export const writePolygon = (ctx: CanvasRenderingContext2D,polygon: Polygon,fromPolygon: Polygon) => {
+export const writePolygon = (ctx: CanvasRenderingContext2D,polygon: Polygon,rendererOptions: RendererOptions) => {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   for (let i = 0; i < polygon.points.length; i++) {
     const i2 = (i + 1) % polygon.points.length;
-    writePointText(ctx,polygon.points[i].x,polygon.points[i].y,`o p${i}`,baseColor);
+    let text = '';
+    if (rendererOptions.showInnerOrOuterLabel) text += 'o ';
+    if (rendererOptions.showVerticesIndexLabel) text += `p${i} `;
+    if (rendererOptions.showPositionLabel) text += `(${polygon.points[i].x},${polygon.points[i].y})`;
+    writePointText(ctx,polygon.points[i].x,polygon.points[i].y,text,baseColor);
     writeLine(ctx,polygon.points[i],polygon.points[i2],baseColor);
   }
   for (let i = 0;i < polygon.hole.length; i++) {
     const color = colors[i];
     const holePoly = polygon.hole[i];
     for (let j = 0; j < holePoly.points.length; j++) {
-      const holeStr = `i${i} p${j}`;
+      let holeStr = '';
+      if (rendererOptions.showInnerOrOuterLabel) holeStr += 'i ';
+      if (rendererOptions.showVerticesIndexLabel) holeStr += `p${j} `;
+      if (rendererOptions.showPositionLabel) holeStr += `(${holePoly.points[j].x},${holePoly.points[j].y})`;
       const j2 = (j + 1) % holePoly.points.length;
       writePointText(ctx,holePoly.points[j].x,holePoly.points[j].y,holeStr,color);
       writeLine(ctx,holePoly.points[j],holePoly.points[j2],color);

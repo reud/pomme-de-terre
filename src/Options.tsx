@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, Checkbox, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel, RadioGroup} from '@mui/material';
 
 export interface RendererOptions {
@@ -34,6 +34,10 @@ export const Options: React.FC<OptionsProps> = (props) => {
       }
     };
   }
+
+  useEffect(() => {
+    props.onChange({showInnerOrOuterLabel, showPositionLabel, showVerticesIndexLabel})
+  },[showInnerOrOuterLabel,showPositionLabel,showVerticesIndexLabel]);
 
 
   return (

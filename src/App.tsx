@@ -39,8 +39,11 @@ function App() {
   const [statusMessage,setStatusMessage] = useState<string>("Hello World");
   const [canvasCtx,setCanvasCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [polygon, setPolygon] = useState<Polygon | null>(normalizePolygon(defaultPolygon,800,800));
-  const [originPolygon, setOriginPolygon] = useState<Polygon | null>(defaultPolygon);
-
+  const [rendererOptions,setRendererOptions] = useState<RendererOptions>({
+    showInnerOrOuterLabel: false,
+    showPositionLabel: false,
+    showVerticesIndexLabel: false
+  });
 
   useEffect(() => {
     const canvas = document.getElementById("canvas");
@@ -61,7 +64,6 @@ function App() {
       typed = JSON.parse(value);
       const converted = normalizePolygon(typed!,800,800);
       setPolygon(converted);
-      setOriginPolygon(typed);
     } catch (e) {
       setStatusMessage(e as string);
     }
@@ -74,7 +76,10 @@ function App() {
         <p>
           {statusMessage}
         </p>
-        <Options onChange={(v) => {}} defaultValues={{
+        <Options onChange={(v) => {
+          setRendererOptions(v);
+          console.log(rendererOptions);
+        }} defaultValues={{
           showInnerOrOuterLabel: false, showPositionLabel: false, showVerticesIndexLabel: false
         }} />
         <TextareaAutosize
@@ -84,7 +89,7 @@ function App() {
           onChange={handleValueChange}
           style={{ width: 400,marginTop: 20 }}
         />
-        <Button onClick={() => writePolygon(canvasCtx!,polygon!,originPolygon!)}>
+        <Button onClick={() => writePolygon(canvasCtx!,polygon!,rendererOptions)}>
           Go
         </Button>
       </div>
