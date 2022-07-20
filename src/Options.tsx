@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Checkbox, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel, RadioGroup} from '@mui/material';
+import {Card, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel} from '@mui/material';
 
 export interface RendererOptions {
   showInnerOrOuterLabel: boolean;
@@ -37,7 +37,7 @@ export const Options: React.FC<OptionsProps> = (props) => {
 
   useEffect(() => {
     props.onChange({showInnerOrOuterLabel, showPositionLabel, showVerticesIndexLabel})
-  },[showInnerOrOuterLabel,showPositionLabel,showVerticesIndexLabel]);
+  },[props,showInnerOrOuterLabel,showPositionLabel,showVerticesIndexLabel]);
 
 
   return (
