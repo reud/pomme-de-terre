@@ -3,6 +3,7 @@ import './App.css';
 import { writePolygon } from './canvasRenderer';
 import {Button, TextareaAutosize} from '@mui/material';
 import {normalizePolygon, Polygon} from './Polygon';
+import {Options, RendererOptions} from './Options';
 
 
 
@@ -73,12 +74,15 @@ function App() {
         <p>
           {statusMessage}
         </p>
+        <Options onChange={(v) => {}} defaultValues={{
+          showInnerOrOuterLabel: false, showPositionLabel: false, showVerticesIndexLabel: false
+        }} />
         <TextareaAutosize
           maxRows="1000"
           aria-label="play-string"
           defaultValue={JSON.stringify(defaultPolygon)}
           onChange={handleValueChange}
-          style={{ width: 400 }}
+          style={{ width: 400,marginTop: 20 }}
         />
         <Button onClick={() => writePolygon(canvasCtx!,polygon!,originPolygon!)}>
           Go
